@@ -20,7 +20,7 @@ return new class extends Migration
             $table->char('marca', 25)->default('');
             $table->char('variedad', 50)->default('');
             $table->integer('longitud')->default(0)->nullable('');
-            $table->char('diametro', 30)->nullable();
+            $table->char('diametro', 30)->default('')->nullable();
             $table->char('reclasifica', 4)->default('')->nullable();
             $table->integer('bunches')->default(0);
             $table->unsignedBigInteger('id_bodega');

@@ -19,7 +19,7 @@
                                 <label for="fecha">Fecha</label>
                             </div>
                             <div class="col-2">
-                                <input type="date" class="form-control-sm" value="{{date("Y-m-d")}}">
+                                <input type="date" id="fecha" name="fecha" class="form-control-sm" value="{{date("Y-m-d")}}">
                             </div>
                             <div class="col-1">
                                 <label for="pedido">Pedido</label>
@@ -206,7 +206,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
-                            <table id="dispo" class="table table-bordered table-sm table-striped">
+                            <table id="carga" class="table table-bordered table-sm table-striped">
                                 <thead>
                                     <tr>
                                         <th>Marca</th>

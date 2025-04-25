@@ -18,7 +18,7 @@ class PrepackingController extends Controller
      */
     public function index()
     {
-        $prepackings = Prepacking::all();
+        $prepackings = Prepacking::orderBy('id', 'desc')->get();
         return view('venta.index', compact('prepackings'));
     }
 
@@ -163,7 +163,48 @@ class PrepackingController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $prepacking = Prepacking::create([
+            'orden' => 1,
+            'cod_client' => $request->cod_client,
+            'marca_id' => 1,
+            'marca' => $request->marca,
+            'variedad' => $request->variedad,
+            'longitud' => $request->largo,
+            'bunches' => $request->reserva,
+            'id_bodega' => $request->bodega,
+            'bodega' => $request->bodega,
+            'botones' => $request->botones,
+            'caja' => $request->desde,
+            'estado' => "P",
+            'pendiente' => $request->reserva,
+            'fecha_corte' => $request->fecha,
+            'carguera' => "Preguntar",
+            'fecha_pedido' => $request->fecha,
+            'salida_finca' => $request->fecha,
+            'salida_vuelo' => $request->fecha,
+            'transporte' => "Camion",
+            'salida' => "QUITO",
+            'pais' => "preguntar",
+            'observacion' => "EXTRA",
+            'cuarto_frio' => "Cuarto",
+            'remision' => 0,
+            'adicional' => 0,
+            'id_user' => 1,
+            'tipo_precio' => "A",
+            'tipo_venta' => "VSO",
+            'tipo_caja' => $request->tipo,
+            'long_hasta' => 0,
+            'id_transportista' => 1,
+            'empaque' => $request->empaque,
+        ]);
+        $variedad = DB::select("
+            SELECT id
+            FROM flores
+            WHERE variedad = '".$request->variedad."'
+        ");
+        $prepacking = Prepacking::orderBy('id', 'DESC')->first();
+        $datos = [$variedad,$prepacking];
+        return response()->json($datos);
     }
 
     /**
@@ -177,9 +218,25 @@ class PrepackingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Prepacking $prepacking)
+    public function edit($id)
     {
-        //
+        $fechahoy = date("Y-m-d");
+        $fecha = strtotime('-5 day', strtotime($fechahoy));
+        $fecha = date('Y-m-d', $fecha);
+        $bunches = DB::select("
+            SELECT f.variedad as variedad, COUNT(b.num_tallos) as tallos
+            FROM bunches AS b INNER JOIN flores AS f ON b.id_flor = f.id 
+            WHERE estado = '' AND b.fecha >= '".$fecha."'
+            GROUP BY 1
+        ");
+        $prepacking = Prepacking::find($id);
+        $principal = DB::select("SELECT consigna FROM clientes WHERE id = '".$prepacking->cod_client."' ");
+        $clientes = DB::select('SELECT nombre FROM clientes WHERE nombre = consigna');
+        $bodegas = Bodegas::all();
+        $empaques = TipoEmpaques::all();
+        $tallos = DB::select('SELECT DISTINCT num_tallos FROM bunches where estado =""');
+        $largos = DB::select('SELECT DISTINCT MID(cod_varie,4,5) AS longitud FROM bunches WHERE estado = "" ORDER BY longitud DESC');
+        return view('venta.edit', compact('prepacking','clientes','bodegas','empaques','tallos','largos','bunches','principal'));
     }
 
     /**

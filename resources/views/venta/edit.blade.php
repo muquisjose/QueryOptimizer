@@ -1,100 +1,146 @@
 @extends('layouts.plantilla')
 @section('title')
-<title>AppNet | Bunches</title>
+<title>AppNet | Prepacking</title>
 @endsection
 @section('content')
 <div class="container-fluid">
-    <form action="{{route('bunches.update', $bunche)}}" method="POST">
-        @csrf
-        @method('post')
+    
+        
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card card-success">
+            <div class="col">
+                <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Datos Generales</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row form-group">
-                            <div class="col">
-                                <label for="Bunchenum">Bunche Nº</label>
+                            <div class="col-1">
+                                <label for="fecha">Fecha</label>
+                            </div>
+                            <div class="col-2">
+                                <input type="date" id="fecha_corte" name="fecha_corte" class="form-control-sm" value="{{$prepacking->fecha_pedido}}" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="pedido">Pedido</label>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" name="pedido" id="pedido" class="form-control-sm" placeholder="pedido" value="{{$prepacking->packing}}" readonly>
+                            </div>
+                            <div class="col-1">
+                                <label for="Bodega">Bodega</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" readonly name="num_bunche" value="{{$bunche->num_bunch}}">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="Esatdo">Estado</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" readonly name="estado" value="Nuevo">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="variedad">Variedad</label>
-                            </div>
-                            <div class="col">
-                                <select name="cod_varie" id="cod_varie" class="form-control select2" required>
-                                    <option value="">Seleccione...</option>
-                                    @foreach ($variedades as $variedad)
-                                        <option value="{{$variedad->id}}" {{ ($variedad->codigo == substr($bunche->cod_varie, 0, 3)) ? 'selected':''}}>{{$variedad->variedad}}</option>
+                                <select name="bodega" id="bodega" class="form-control-sm">
+                                    @foreach ($bodegas as $bodega)
+                                        @if($prepacking->bodega == $bodega->id)
+                                            <option value="{{$bodega->id}}" selected>{{$bodega->descripcion}}</option>
+                                        @else
+                                            <option value="{{$bodega->id}}">{{$bodega->descripcion}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="Largo">Largo</label>
+                            <div class="col-1">
+                                <label for="empaque">Empaque</label>
                             </div>
                             <div class="col">
-                                <select name="largo" id="largo" class="form-control" required>
-                                    <option value="">Seleccione...</option>
-                                    @foreach ($largos as $largo)
-                                        <option value="{{$largo->id}}" {{ ($largo->largo == substr($bunche->cod_varie, 3, 3)) ? 'selected':''}}>{{$largo->largo}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="tipo_caja">Empaque</label>
-                            </div>
-                            <div class="col">
-                                <select name="empaque" id="empaque" class="form-control" required>
-                                    <option value="">Seleccione...</option>
+                                <select name="empaque" id="empaque" class="form-control-sm">
                                     @foreach ($empaques as $empaque)
-                                        <option value="{{$empaque->id}}" {{ ($empaque->id == $bunche->empaque) ? 'selected':''}}>{{$empaque->nombre}}</option>
+                                        @if ($prepacking->empaque == $empaque->id)
+                                            <option value="{{$empaque->id}}" selected>{{$empaque->nombre}}</option>
+                                        @else
+                                            <option value="{{$empaque->id}}">{{$prepacking->nombre}}</option>
+                                        @endif                                        
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col">
-                                <label for="tallosbunche">Tallos/Bunche</label>
+                            <div class="col-1">
+                                <label for="cliente">Cliente:</label>
+                            </div>
+                            <div class="col-3">
+                                <select name="cliente" id="cliente" class="form-control-sm select2" style="position: relative; width: 100%;">
+                                    @foreach ($clientes as $cliente)
+                                        @if ($cliente->nombre == $principal)
+                                            <option value="{{$cliente->nombre}}" selected>{{$cliente->nombre}}</option>
+                                        @else
+                                            <option value="{{$cliente->nombre}}">{{$cliente->nombre}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-1">
+                                <label for="tallos">Tallos:</label>
+                            </div>
+                            <div class="col-1.5">
+                                <select name="botones" id="botones" class="form-control-sm" style="position: relative; width: 100%;">
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($tallos as $tallo)
+                                        @if ($tallo->num_tallos = $prepacking->botones)
+                                            <option value="{{$tallo->num_tallos}}" selected>{{$tallo->num_tallos}}</option>
+                                        @else
+                                            <option value="{{$tallo->num_tallos}}">{{$tallo->num_tallos}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-1">
+                                <label for="dia">Dia:</label>
                             </div>
                             <div class="col">
-                                <select name="num_tallos" id="num_tallos" class="form-control" required>
+                                <select name="dia" id="dia" class="form-control-sm select2" data-placeholder="Seleccione..." multiple="multiple" style="width: 100%;">
                                     <option value="">Seleccione...</option>
-                                    <option value="25" {{ (25 == $bunche->num_tallos) ? 'selected':''}}>25</option>
-                                    <option value="20" {{ (20 == $bunche->num_tallos) ? 'selected':''}}>20</option>
-                                    <option value="18" {{ (18 == $bunche->num_tallos) ? 'selected':''}}>18</option>
-                                    <option value="12" {{ (12 == $bunche->num_tallos) ? 'selected':''}}>12</option>
+                                    <option value="5" selected>5</option>
+                                    <option value="4" selected>4</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="1" selected>1</option>
+                                    <option value="0" selected>0</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="bodega">Bodega</label>
+                        <div class="row">
+                            <div class="col-1">
+                                <label for="subcliente">Sub Cliente:</label>
                             </div>
-                            <div class="col">
-                                <select name="tipo_env" id="tipo_env" class="form-control" required>
+                            <div class="col-3">
+                                <select name="cod_client" id="cod_client" class="form-control-sm select2" style="position: relative; width: 100%;">
                                     <option value="">Seleccione...</option>
-                                    @foreach ($envolturas as $envoltura)
-                                        <option value="{{$envoltura->id}}" {{ ($envoltura->id == $bunche->tipo_env) ? 'selected':''}}>{{$envoltura->descripcion}}</option>
-                                    @endforeach
                                 </select>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text input-group-sm">Marca</span>
+                                    </div>
+                                    <input type="text" name="marca" id="marca" class="form-control-sm" placeholder="Marca" value="{{$prepacking->marca}}">
+                                </div>
+                            </div>
+                            <div class="col-2.5">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text input-group-sm">Caja Desde</span>
+                                    </div>
+                                    <input type="text" name="desde" id="desde" class="form-control-sm" value="1" style="width: 50px;">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text input-group-sm">Hasta</span>
+                                    </div>
+                                    <input type="text" name="hasta" id="hasta" class="form-control-sm" value="1" style="width: 50px;">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <select name="tipo" id="tipo" class="form-control-sm" style="position: relative; width: 100%;">
+                                    <option value="HB">HB</option>
+                                    <option value="QB">QB</option>
+                                    <option value="FB">FB</option>
+                                    <option value="OCT">OCT</option>
+                                    <option value="SB">SB</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <input type="button" class="btn btn-block bg-purple color-palette btn-sm" id="btnDispo" value="Mostrar">
                             </div>
                         </div>
                     </div>
@@ -102,63 +148,96 @@
                 </div>
                 <!-- /.card -->
             </div>
-            <div class="col-md-6">
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Datos Mesas</h3>
-                    </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-success">
+                    
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="mesa">Mesa</label>
-                            </div>
-                            <div class="col">
-                                <select name="mesa" id="mesa" class="form-control" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="mesa">Clasifica</label>
-                            </div>
-                            <div class="col">
-                                <select name="id_prepara" id="id_prepara" class="form-control" required>
-                                    <option value="">Seleccione</option>
-                                    @foreach ($preparas as $prepara)
-                                        <option value="{{$prepara->id}}" {{ ($prepara->id == $bunche->id_prepara) ? 'selected':''}}>{{$prepara->nombre}}</option>
+                        <div class="row">
+                            <table class="table table-bordered table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Variedad</th>
+                                        <th>Disponible</th>
+                                        <th>Pendiente</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="dispo">
+                                    @foreach ($bunches as $bunche)
+                                        <tr>
+                                            <td>{{$bunche->variedad}}</td>
+                                            <td>{{$bunche->tallos}}</td>
+                                            <td>0 <input type="button" name="btnVariedad" id="btnVariedad" value="S" class=" btn btn-default float-right btn-sm"></td>
+                                        </tr>
                                     @endforeach
-                                </select>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="mesa">Emboncha</label>
-                            </div>
-                            <div class="col">
-                                <select name="emboncha" id="emboncha" class="form-control" required>
-                                    <option value="">Seleccione</option>
-                                    @foreach ($preparas as $prepara)
-                                        <option value="{{$prepara->id}}">{{$prepara->nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-9">
+                <div class="card card-success">
+                    
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="dispo" class="table table-bordered table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Variedad</th>
+                                        <th>Long.</th>
+                                        <th>Dispo</th>
+                                        <th>Reserva</th>
+                                        <th>Dia 0</th>
+                                        <th>Dia 1</th>
+                                        <th>Dia 2</th>
+                                        <th>Dia 3</th>
+                                        <th>Dia 4</th>
+                                        <th>Dia 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="row form-group">
-                            <div class="col">
-                                <label for="mesa">Reprocesos</label>
-                            </div>
-                            <div class="col">
-                                <select name="reprocesos" id="reprocesos" class="form-control" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="">Correccion</option>
-                                    <option value="">Transformacion</option>
-                                </select>
-                            </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card card-success">
+                    
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="carga" class="table table-bordered table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Marca</th>
+                                        <th>Precio</th>
+                                        <th>Tipo</th>
+                                        <th>Caja</th>
+                                        <th>Variedad</th>
+                                        <th>Largo</th>
+                                        <th>Reclasificacion</th>
+                                        <th>Cantidad</th>
+                                        <th>Envoltura</th>
+                                        <th>Tallos</th>
+                                        <th>Pendiente</th>
+                                        <th>Dia</th>
+                                        <th>Carguera</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -167,8 +246,8 @@
             </div>
         </div>
         <div class="col-3">
-            <button type="submit" class="btn btn-success">Imprimir</button>
+            <button type="submit" class="btn btn-success">Crear</button>
         </div>
-    </form>
+    
 </div>
 @endsection

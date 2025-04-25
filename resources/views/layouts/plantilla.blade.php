@@ -658,7 +658,8 @@
   };
 
   function crearPacking(){
-    const element = document.getElementById("reserva");
+    const element = document.getElementById("reserva").value;
+    const variedad = document.getElementById("reserva");
     $.ajax({
         url: "{{ URL::route('prepackings.store') }}",
         type: 'POST',
@@ -668,28 +669,29 @@
             'empaque': $("#empaque").val(),
             'botones': $("#botones").val(),
             'reserva': $("#reserva").val(),
+            'fecha': $("#fecha").val(),
             'largo': $("#largo").val(),
             'cod_client': $("#cod_client").val(),
             'marca': $("#marca").val(),
+            'tipo': $("#tipo").val(),
             'desde': $("#desde").val(),
             'hasta': $("#hasta").val(),
-            'variedad': element.getAttribute("data-variedad"),
-            'largo': element.getAttribute("data-largo"),
+            'variedad': variedad.getAttribute("data-variedad"),
+            'largo': variedad.getAttribute("data-largo"),
             'dia': $("#dia").val(),
         },
         success: function(data) {
-          $('#dispo tbody').empty();
-          for (let index = 0; index < data.length; index++) {
-            $(data[index]).each(function(i, v){
-              var dispo = parseInt(v.cero)+parseInt(v.uno)+parseInt(v.dos)+parseInt(v.tres)+parseInt(v.cuatro)+parseInt(v.cinco);
-              $('#dispo').append('<tr><td>'+v.variedad+'</td><td>'+v.largo+'</td><td>'+dispo+'</td><td style="width: 150px;"><input type="number" name="reserva" min="1" class="form-control form-control-sm" onclick="crearPacking()" style="width: 150px;"></td><td>'+v.cero+'</td><td>'+v.uno+'</td><td>'+v.dos+'</td><td>'+v.tres+'</td><td>'+v.cuatro+'</td><td>'+v.cinco+'</td></tr>');
-            });
-          }
+          $(data[0]).each(function(i, v){ // indice, valor
+            dispo(v.id);
+          });
+          $(data[1]).each(function(i, v){ // indice, valor
+            $('#carga').append('<tr><td>'+v.marca+'</td><td>'+v.tipo_precio+'</td><td>'+v.tipo_venta+'</td><td>'+v.tipo_caja+'</td><td>'+v.variedad+'</td><td>'+v.longitud+'</td></tr>');
+          });
         },
       });
   };
   
-  var stepper = new Stepper($('.bs-stepper')[0]);
+  //var stepper = new Stepper($('.bs-stepper')[0]);
 </script>
 </body>
 </html>
